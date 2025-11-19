@@ -1,12 +1,24 @@
+
 import React, { useState } from 'react';
 import ReligiousHabitCard from '../ReligiousHabitCard';
 import { useHabitStore } from '../../hooks/useHabitStore';
 import { ICONS } from '../../constants';
 import AddReligiousHabitModal from '../AddReligiousHabitModal';
+import { Page } from '../../types';
 
-const ReligiousHabitsView: React.FC = () => {
+interface ReligiousHabitsViewProps {
+    setActivePage: (page: Page) => void;
+}
+
+const ReligiousHabitsView: React.FC<ReligiousHabitsViewProps> = ({ setActivePage }) => {
   const { religiousHabits } = useHabitStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleHabitClick = (habitId: string) => {
+      if (habitId === 'r10') setActivePage('azkar-morning');
+      if (habitId === 'r11') setActivePage('azkar-evening');
+      if (habitId === 'r12') setActivePage('azkar-sleep');
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -26,7 +38,11 @@ const ReligiousHabitsView: React.FC = () => {
       
       <div className="space-y-4">
         {religiousHabits.map(habit => (
-          <ReligiousHabitCard key={habit.id} habit={habit} />
+          <ReligiousHabitCard 
+            key={habit.id} 
+            habit={habit} 
+            onClick={['r10', 'r11', 'r12'].includes(habit.id) ? () => handleHabitClick(habit.id) : undefined}
+          />
         ))}
       </div>
 

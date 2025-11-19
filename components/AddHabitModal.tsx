@@ -12,6 +12,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose }) => {
   const [name, setName] = useState('');
   const [icon, setIcon] = useState('💪');
   const [goal, setGoal] = useState('');
+  const [reminderTime, setReminderTime] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose }) => {
       icon,
       goal,
       type: 'daily',
+      reminderTime: reminderTime || undefined,
       accentColor: '#BFD8C8', // Default color
     };
     
@@ -59,6 +61,17 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose }) => {
             className="w-full bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-pastel-green"
             placeholder="الهدف (مثال: 30 دقيقة)"
           />
+
+          <div className="flex flex-col">
+             <label className="text-sm text-dark-green/80 mb-1 mr-1">تذكير (اختياري)</label>
+             <input
+                type="time"
+                value={reminderTime}
+                onChange={(e) => setReminderTime(e.target.value)}
+                className="w-full bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-pastel-green text-left"
+                dir="ltr"
+              />
+          </div>
 
           <div className="flex justify-end gap-3 pt-4">
             <button type="button" onClick={onClose} className="px-6 py-2 rounded-full text-dark-green">
